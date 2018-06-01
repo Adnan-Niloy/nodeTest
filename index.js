@@ -4,13 +4,22 @@ const Joi = require('joi');
 const logger = require('./logger');
 const express = require('express');
 const app = express();
-app.use(express.json());
 
+// console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+// console.log(`app: ${app.get('env')}`);
+
+app.use(express.json());
 app.use(logger);
 app.use(express.urlencoded({extended : true}));
 app.use(express.static('public'));
 app.use(helmet());
-app.use(morgan('tiny'));
+
+if(app.get('env') === 'development'){
+    app.use(morgan('tiny'));
+    console.log("Morgan enebled...");
+}
+
+
 
 const courses = [
     { id: 1, name: 'course1' },
