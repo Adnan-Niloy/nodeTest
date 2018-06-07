@@ -1,3 +1,5 @@
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
 const config = require('config');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -9,6 +11,7 @@ const app = express();
 // console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 // console.log(`app: ${app.get('env')}`);
 
+
 app.use(express.json());
 app.use(logger);
 app.use(express.urlencoded({extended : true}));
@@ -17,8 +20,11 @@ app.use(helmet());
 
 if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
-    console.log("Morgan enebled...");
+    startupDebugger("Morgan enebled...");
 }
+
+//db work
+dbDebugger("Connected to DB");
 
 console.log(`Application Name: ${config.get('name')}`);
 console.log(`Mail Server: ${config.get('mail.host')}`);
