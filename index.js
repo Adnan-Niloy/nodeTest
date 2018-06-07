@@ -11,6 +11,8 @@ const app = express();
 // console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 // console.log(`app: ${app.get('env')}`);
 
+app.set('view engine', 'pug');
+app.set('views', './views');
 
 app.use(express.json());
 app.use(logger);
@@ -40,7 +42,8 @@ const courses = [
 
 //#region get
 app.get('/', (req, res) => {
-    res.send('Hello World!!!');
+    // res.send('Hello World!!!');
+    res.render('index', { title: 'My Express App', message: 'Hello'});
 });
 
 app.get('/api/courses', (req, res) => {
